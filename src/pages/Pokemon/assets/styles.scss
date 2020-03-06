@@ -1,4 +1,4 @@
-@import '../../../theme/variables';
+@import "../../../theme/variables";
 
 ion-toolbar {
   --padding-top: 30px;
@@ -12,42 +12,66 @@ ion-toolbar {
     }
   }
 
-  .header {
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h3 {
-      font-size: 1.8em;
-    }
+  .background-img {
+    opacity: 0.2;
+    width: 150px;
+    position: absolute;
+    top: 45%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+    transform: translate(-50%, -50%);
   }
-  .subheader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
+  .background-img-pokemon {
+    width: 150px;
+    position: absolute;
+    top: 45%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
 
-    .types {
+  .pokemon-top-layout {
+    padding: 0 20px;
+    .header {
+      color: white;
       display: flex;
       justify-content: space-between;
-      width: 40%;
-      .type {
-        width: 45%;
-        font-size: .8em;
-        color: white;
-        border-radius: 20px;
+      align-items: center;
+  
+      h3 {
+        font-size: 1.8em;
+      }
+    }
+    .subheader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+  
+      .types {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 4px;
-    
-        @each $name, $selector, $color in $types {
-          &#{$selector} {
-            background-color: lighten($color, 10%);
+        justify-content: space-between;
+        width: 40%;
+        .type {
+          width: 45%;
+          font-size: 0.8em;
+          color: white;
+          border-radius: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 4px;
+  
+          @each $name, $selector, $color in $types {
+            &#{$selector} {
+              background-color: lighten($color, 10%);
+            }
           }
         }
       }
+      .short-description {
+        font-size: 0.8em;
+      }
     }
   }
+
 }

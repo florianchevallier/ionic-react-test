@@ -5,7 +5,7 @@ import { PokemonListItem } from '../../../types';
 import { useHistory } from 'react-router';
 
 function PokemonCard(props: PokemonListItem) {
-  const { name, number, spriteURL, type1, type2 } = props;
+  const { name, number, type1, type2 } = props;
   const history = useHistory();
 
   return (
@@ -18,7 +18,7 @@ function PokemonCard(props: PokemonListItem) {
           <div className={cx("type", type1)}>{type2}</div>
         ) : null}
       </div>
-      <img className="sprite" src={spriteURL} alt={name} />
+      <img className="sprite" src={`https://img.pokemondb.net/artwork/vector/${name}.png`} alt={name} />
       <img className="background-pokeball" src="/assets/images/pokeball_white.png" alt="pokeball" />
     </div>
   )

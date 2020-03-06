@@ -44,23 +44,26 @@ ion-toolbar {
     opacity: .4;
   }
 
-  .sprite {
-    position: absolute;
-    bottom: 0;
-    right: -10px;
-  }
-
   .background-pokeball {
     position: absolute;
     bottom: 0;
     right: -10px;
     width: 70px;
     opacity: .2;
+    z-index: 0;
   }
 
   .name {
     color: white;
     margin-top: 20px;
+  }
+
+  .sprite {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    max-height: 50px;
+    z-index: 1;
   }
 
   @each $name, $selector, $color in $types {

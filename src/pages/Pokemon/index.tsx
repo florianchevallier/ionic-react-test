@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonLoading, IonTitle, IonToolbar } from '@ionic/react';
-import capitalize from 'lodash/capitalize';
+import { IonBackButton, IonButtons, IonHeader, IonLoading, IonToolbar } from '@ionic/react';
 
 import cx from 'classnames';
 import { IoMdHeartEmpty } from 'react-icons/io';
@@ -10,6 +9,8 @@ import request from '../../utils/request';
 import { PokemonSpecie } from '../../types';
 import './assets/styles.scss';
 import Header from './components/Header';
+import Card from './components/Card';
+import { motion, MotionValue } from 'framer-motion';
 
 interface PokemonParams {
   id: string
@@ -27,6 +28,9 @@ interface GetPokemonResponse {
 function Pokemon() {
   const params: PokemonParams = useParams<PokemonParams>();
   const [isLoading, setIsLoading] = useState(true);
+  const [pokemonOpacity, setPokemonOpacity] = useState<MotionValue>()
+  const [isCardOpen, setIsCardOpen] = useState<boolean>(false);
+
   const fetchPokemonSpecie = () => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon-species/${params.id}`, { cache: "force-cache" });
   const fetchPokemon = () => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon/${params.id}`, { cache: "force-cache" });
 
@@ -44,33 +48,49 @@ function Pokemon() {
 
   return (
     <div className={cx("pokemon-layout", type1)}>
-      <IonLoading
-        isOpen={isLoading}
-        message={'Please wait...'}
-      />
-      <IonHeader className="ion-no-border">
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/pokedex" />
-          </IonButtons>
-          <IonButtons slot="primary">
-            <IoMdHeartEmpty size={20} />
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        {!isLoading && pokemon && specie ? (
-          <>
-            <Header
-              name={pokemon.name}
-              number={pokemon.id}
-              type1={type1}
-              type2={type2}
-              shortDescription={specie.genera.find(g => g.language.name === 'en')?.genus}
-            />
-          </>
+      <div className="pokemon-top-layout">
+        <img className="background-img" src="/assets/images/pokeball_white.png" alt="pokeball white" />
+        {!isLoading && pokemon ? (
+          <motion.img
+            style={{ opacity: pokemonOpacity, zIndex: isCardOpen ? 0 : 2 }}
+            className="background-img-pokemon"
+            src={`https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`}
+            alt={pokemon.name}
+          />
         ) : null}
-      </IonContent>
+        <IonLoading
+          isOpen={isLoading}
+          message={'Please wait...'}
+        />
+        <IonHeader className="ion-no-border">
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonBackButton defaultHref="/pokedex" />
+            </IonButtons>
+            <IonButtons slot="primary">
+              <IoMdHeartEmpty size={20} />
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+        {!isLoading && pokemon && specie ? (
+          <Header
+            name={pokemon.name}
+            number={pokemon.id}
+            type1={type1}
+            type2={type2}
+            shortDescription={specie.genera.find(g => g.language.name === 'en')?.genus}
+          />
+        ) : null}
+      </div>
+      {!isLoading && pokemon && specie ? (
+        <Card
+          setPokemonOpacity={setPokemonOpacity}
+          isCardOpen={isCardOpen}
+          setIsCardOpen={setIsCardOpen}
+          pokemon={pokemon}
+          specie={specie}
+        />
+      ) : null}
     </div>
   )
 }

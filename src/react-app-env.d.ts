@@ -1,6 +1,9 @@
 /// <reference types="react-scripts" />
 declare module 'pokeapi-js-wrapper';
 declare module 'react-query';
+declare module '@bumaga/tabs';
+
+
 
 
 declare module PokemonNamespace {
