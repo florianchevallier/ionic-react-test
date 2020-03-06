@@ -3,6 +3,8 @@ import { IoMdSearch } from 'react-icons/io';
 import './assets/Home.scss';
 import { IonContent, useIonViewDidEnter, IonItem } from '@ionic/react';
 import Badge from './components/Badge';
+import { Link } from 'react-router-dom';
+import Layout from '../../components/Layout/Layout';
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -12,26 +14,24 @@ const Home: React.FC = () => {
   })
 
   return (
-    <IonContent className="home">
-      <h1 className="title">What pokemon <br />are you looking for ?</h1>
+    <Layout>
+      <IonContent className="home">
+        <h1 className="title">What pokemon <br />are you looking for ?</h1>
 
-      <div className="search-input">
-        <IoMdSearch className="icon" />
-        <input value={search} onChange={({ target: { value } }) => setSearch(value)} placeholder="Search Pokemon" />
-      </div>
-
-      <div className="menu">
-        <div className="row">
-          <IonItem routerLink="/pokedex">
-            <Badge name="Pokedex" color="pokedex" />
-          </IonItem>
-          <IonItem routerLink="/pokedex">
-            <Badge name="Moves" color="moves"/>
-          </IonItem>
+        <div className="search-input">
+          <IoMdSearch className="icon" />
+          <input value={search} onChange={({ target: { value } }) => setSearch(value)} placeholder="Search Pokemon" />
         </div>
-      </div>
 
-    </IonContent>
+        <div className="menu">
+          <div className="row">
+            <Badge to="/pokedex" name="Pokedex" color="pokedex" />
+            <Badge to="/pokedex" name="Moves" color="moves" />
+          </div>
+        </div>
+
+      </IonContent>
+    </Layout>
   );
 };
 

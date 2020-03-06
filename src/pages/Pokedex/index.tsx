@@ -8,6 +8,7 @@ import PokemonCard from './components/PokemonCard';
 import { useQuery, queryCache } from 'react-query';
 import { useInfiniteScroll } from 'react-infinite-scroll-hook';
 import { PokemonListItem, PokemonResults } from '../../types';
+import Layout from '../../components/Layout/Layout';
 
 
 function parsePokemons(pokemonsFetched: PokemonNamespace.Pokemon[]) {
@@ -75,7 +76,7 @@ const PokedexPage: React.FC = () => {
   }
 
   return (
-    <>
+    <Layout>
       <IonHeader translucent className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">
@@ -96,7 +97,7 @@ const PokedexPage: React.FC = () => {
         </div>
 
       </IonContent>
-    </>
+    </Layout>
   )
 }
 

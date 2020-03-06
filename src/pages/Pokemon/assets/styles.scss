@@ -1,0 +1,53 @@
+@import '../../../theme/variables';
+
+ion-toolbar {
+  --padding-top: 30px;
+}
+
+.pokemon-layout {
+  height: 100%;
+  @each $name, $selector, $color in $types {
+    &#{$selector} {
+      background-color: $color;
+    }
+  }
+
+  .header {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      font-size: 1.8em;
+    }
+  }
+  .subheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+
+    .types {
+      display: flex;
+      justify-content: space-between;
+      width: 40%;
+      .type {
+        width: 45%;
+        font-size: .8em;
+        color: white;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px;
+    
+        @each $name, $selector, $color in $types {
+          &#{$selector} {
+            background-color: lighten($color, 10%);
+          }
+        }
+      }
+    }
+  }
+}

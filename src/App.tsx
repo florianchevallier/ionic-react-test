@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home/Home';
@@ -21,21 +21,20 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
-import './theme/variables.css';
-import Layout from './components/Layout/Layout';
+import './theme/variables.scss';
 import Pokedex from './pages/Pokedex';
+import Pokemon from './pages/Pokemon';
 
 const App: React.FC = () => (
   <ReactQueryConfigProvider config={{ refetchAllOnWindowFocus: false }}>
     <IonApp>
-      <Layout>
-        <IonReactRouter>
-          <IonRouterOutlet>
-            <Route path="/" component={Home} exact={true} />
-            <Route path="/pokedex" component={Pokedex} />
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </Layout>
+      <IonReactRouter>
+        <Switch>
+          <Route path="/" component={Home} exact={true} />
+          <Route path="/pokedex" component={Pokedex} />
+          <Route path="/pokemons/:id" component={Pokemon} />
+        </Switch>
+      </IonReactRouter>
     </IonApp>
   </ReactQueryConfigProvider>
 );

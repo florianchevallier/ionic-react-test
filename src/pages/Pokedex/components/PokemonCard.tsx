@@ -2,12 +2,14 @@ import React from 'react'
 import cx from 'classnames';
 
 import { PokemonListItem } from '../../../types';
+import { useHistory } from 'react-router';
 
 function PokemonCard(props: PokemonListItem) {
   const { name, number, spriteURL, type1, type2 } = props;
+  const history = useHistory();
 
   return (
-    <div className={cx("pokemon-card", type1)}>
+    <div className={cx("pokemon-card", type1)} onClick={() => history.push('/pokemons/'+number)}>
       <span className="name">{name}</span>
       <span className="number">#{number}</span>
       <div className="types">
