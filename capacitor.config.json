@@ -1,0 +1,8 @@
+{
+  "appId": "com.rmm.test.app",
+  "appName": "ua-test",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}

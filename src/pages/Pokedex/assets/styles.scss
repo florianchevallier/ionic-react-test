@@ -1,0 +1,90 @@
+ion-toolbar {
+  --background: transparent;
+}
+
+$types:
+  "normal" ".normal" #A8A77A,
+  "fire" ".fire" #FD6A63,
+  "water" ".water" #37A1F2,
+  "electric" ".electric" #F7D02C,
+  "grass" ".grass" #37B99E,
+  "ice" ".ice" #96D9D6,
+  "fighting" ".fighting" #C22E28,
+  "poison" ".poison" #A33EA1,
+  "ground" ".ground" #E2BF65,
+  "flying" ".flying" #A98FF3,
+  "psychic" ".psychic" #F95587,
+  "bug" ".bug" #A6B91A,
+  "rock" ".rock" #B6A136,
+  "ghost" ".ghost" #735797,
+  "dragon" ".dragon" #6F35FC,
+  "dark" ".dark" #705746,
+  "steel" ".steel" #B7B7CE,
+  "fairy" ".fairy" #D685AD;
+
+.pokemon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.pokemon-card {
+  width: 49%;
+  height: 110px;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 10px;
+  
+  .type {
+    width: 50px;
+    font-size: .6em;
+    color: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    margin-top: 10px;
+
+    @each $name, $selector, $color in $types {
+      &#{$selector} {
+        background-color: lighten($color, 10%);
+      }
+    }
+  }
+  .number {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: white;
+    opacity: .4;
+  }
+
+  .sprite {
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+  }
+
+  .background-pokeball {
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    width: 70px;
+    opacity: .2;
+  }
+
+  .name {
+    color: white;
+    margin-top: 20px;
+  }
+
+  @each $name, $selector, $color in $types {
+    &#{$selector} {
+      background-color: $color;
+    }
+  }
+
+}
