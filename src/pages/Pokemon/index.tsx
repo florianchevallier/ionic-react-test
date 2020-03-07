@@ -30,6 +30,7 @@ function Pokemon() {
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonOpacity, setPokemonOpacity] = useState<MotionValue>()
   const [isCardOpen, setIsCardOpen] = useState<boolean>(false);
+  const fromTop = 250;
 
   const fetchPokemonSpecie = () => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon-species/${params.id}`, { cache: "force-cache" });
   const fetchPokemon = () => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon/${params.id}`, { cache: "force-cache" });
@@ -49,10 +50,17 @@ function Pokemon() {
   return (
     <div className={cx("pokemon-layout", type1)}>
       <div className="pokemon-top-layout">
-        <img className="background-img" src="/assets/images/pokeball_white.png" alt="pokeball white" />
+        <img
+          className="background-img"
+          src="/assets/images/pokeball_white.png"
+          alt="pokeball white"
+          style={{
+            top: fromTop
+          }}
+        />
         {!isLoading && pokemon ? (
           <motion.img
-            style={{ opacity: pokemonOpacity, zIndex: isCardOpen ? 0 : 2 }}
+            style={{ opacity: pokemonOpacity, zIndex: isCardOpen ? 0 : 2, top: fromTop }}
             className="background-img-pokemon"
             src={`https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`}
             alt={pokemon.name}

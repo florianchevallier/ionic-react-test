@@ -1,91 +1,49 @@
-import React, { useState, useEffect, useRef, cloneElement, Dispatch, SetStateAction } from 'react'
-import { PokemonSpecie } from '../../../../../types'
-import About from './About'
-import BaseStats from './BaseStats'
-import { Tabs, useTabState, Panel } from "@bumaga/tabs";
-import { motion, AnimatePresence } from 'framer-motion';
-import cx from 'classnames';
+import React, { useState } from 'react';
+import { Panel, Tabs } from "@bumaga/tabs";
+
+import PanelList from './PanelList';
+import About from './Panels/About';
+import BaseStats from './Panels/BaseStats';
+import Evolution from './Panels/Evolution';
+import Moves from './Panels/Moves';
+
+import Tab from './Tab';
+
+import { PokemonSpecie } from '../../../../../types';
 
 interface Props {
   pokemon: PokemonNamespace.Pokemon,
   specie: PokemonSpecie,
 }
 
-const Tab = ({ children }: any) => {
-  const { isActive, onClick } = useTabState()
-
-  function onTabClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    event.stopPropagation();
-    event.preventDefault();
-    onClick(event);
-  }
-
-  return (
-    <button className={cx('tab', isActive && 'active')} onClick={onTabClick}>
-      {children}
-    </button>
-  )
-}
-
-interface PanelList {
-  state: [number, Dispatch<SetStateAction<number>>],
-  children: any
-}
-
-const PanelList = ({ state, children }: PanelList) => {
-  const panelRef = useRef<HTMLLIElement>(null)
-  const [height, set] = useState(0)
-  const [activeIndex] = state
-
-  useEffect(() => {
-    panelRef.current && set(panelRef.current.offsetHeight)
-  }, [activeIndex, set])
-
-  return (
-    <motion.ul className='panel-list' animate={{ height }}>
-      <AnimatePresence initial={false}>
-        <motion.li
-          ref={panelRef}
-          className='panel'
-          key={activeIndex}
-          initial={{ opacity: 0, x: -32 }}
-          animate={{ opacity: 1, x: 0, transition: { delay: 0.1, ease: 'easeInOut', duration: 0.2 } }}
-          exit={{ opacity: 0, x: 32, transition: { ease: 'easeInOut', duration: 0.2 } }}
-        >
-          {cloneElement(children[activeIndex], { active: true })}
-        </motion.li>
-      </AnimatePresence>
-    </motion.ul>
-  )
-}
-
 function TabsIndex({
   pokemon,
   specie
 }: Props) {
-  const state: [number, Dispatch<SetStateAction<number>>] = useState(0)
+  const [activeIndex, setActiveIndex] = useState<number>(0)
+  
   return (
-    <Tabs state={state}>
+    <Tabs state={[activeIndex, setActiveIndex]}>
       <div className='tabs'>
         <div className='tab-list'>
-          <Tab>Tab 1</Tab>
-
-          <Tab>Tab 2</Tab>
-
-          <Tab>Tab 3</Tab>
+          <Tab>About</Tab>
+          <Tab>Base Stats</Tab>
+          <Tab>Evolution</Tab>
+          <Tab>Moves</Tab>
         </div>
 
-        <PanelList state={state}>
+        <PanelList activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
           <Panel>
-            <p>animations with framer/motion</p>
+            <About pokemon={pokemon} specie={specie} />
           </Panel>
-
           <Panel>
-            <p>is pure</p>
+            <BaseStats pokemon={pokemon} specie={specie} />
           </Panel>
-
           <Panel>
-            <p>❤️</p>
+            <Evolution pokemon={pokemon} specie={specie} />
+          </Panel>
+          <Panel>
+            <Moves pokemon={pokemon} specie={specie} />
           </Panel>
         </PanelList>
       </div>

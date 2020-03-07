@@ -1,0 +1,41 @@
+.about {
+  .description {
+    font-size: 14px;
+  }
+  .height-weight {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 20px;
+    box-shadow: 1px 8px 25px -20px black;
+    border: 1px grey;
+    padding: 10px 20px;
+    border-radius: 5px;
+
+    .title {
+      display: block;
+      margin-bottom: 5px;
+      color: #9C9C9C;
+    }
+    .bloc {
+      font-size: 12px;
+      text-align: left;
+      width: 50%;
+    }
+  }
+
+  .breeding {
+    margin-top: 20px;
+    tr {
+      height: 30px;
+    }
+    .title {
+      font-size: 14px;
+      color: #9C9C9C;
+    }
+    .measure {
+      font-size: 14px;
+      padding-left: 20px;
+    }
+  }
+}

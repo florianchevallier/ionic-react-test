@@ -1,21 +1,20 @@
 import React from 'react'
-import { PokemonSpecie } from '../../../../../types'
+import { PokemonSpecie } from '../../../../../../types'
 
 interface Props {
   pokemon: PokemonNamespace.Pokemon,
   specie: PokemonSpecie
 }
 
-function BaseStats({
+function Moves({
   pokemon,
   specie
 }: Props) {
   return (
     <div>
-      Je suis le tab BaseStats
-      Premier stats {pokemon.stats[0].base_stat}
+      Je suis le tab Moves
     </div>
   )
 }
 
-export default BaseStats
+export default Moves

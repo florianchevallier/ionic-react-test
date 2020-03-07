@@ -10,6 +10,14 @@ interface Props {
   shortDescription: string | undefined
 }
 
+function getAbsoluteNumber(number: number)
+: string
+{
+  if (number < 10) return '#00'+number;
+  if (number < 100) return '#0'+number;
+  return `#${number}`
+}
+
 function Header({
   name,
   number,
@@ -22,7 +30,7 @@ function Header({
     <>
       <div className="header">
         <h3>{capitalize(name)}</h3>
-        <span className="number">#{number}</span>
+        <span className="number">{getAbsoluteNumber(number)}</span>
       </div>
       <div className="subheader">
         <div className="types">

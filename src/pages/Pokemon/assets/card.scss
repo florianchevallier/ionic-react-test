@@ -2,9 +2,7 @@
   background-color: white;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
-  padding: 50px 10px;
-  position: absolute;
-  bottom: -550px;
+  padding: 40px 10px;
   height: 850px;
   z-index: 1;
   width: 100%;
@@ -18,12 +16,13 @@
   width: 100%;
   background-color: #fff;
   margin: 0px 0;
+  padding: 0 10px;
 }
 
 .tab-list {
   display: flex;
-  justify-content: space-around;
-  padding-bottom: 24px;
+  justify-content: space-between;
+  padding-bottom: 10px;
 }
 
 .tab {
@@ -31,42 +30,20 @@
   cursor: pointer;
   border: none;
   font-size: 16px;
-  line-height: 24px;
-  padding: 8px 16px;
-  color: #492796;
+  opacity: 0.5;
+  padding-bottom: 15px;
   background-color: #fff;
-  border: 1px solid #f1f1f1;
-  box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.1);
-  margin-right: 24px;
+  transition: opacity 0.16s ease-in-out;
 
-  transition: color 0.16s ease-in-out, background-color 0.16s ease-in-out,
-    border-color 0.16s ease-in-out;
-}
-
-.tab:focus,
-.tab:focus-visible {
-  box-shadow: 0 0 0 4px rgba(73, 39, 150, 0.5);
-}
-
-.tab:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-
-.tab.active {
-  background-color: #492796;
-  border-color: #492796;
-  color: white;
-  cursor: default;
+  &.active {
+    border-bottom: 1px black solid;
+    opacity: 1;
+  }
 }
 
 .panel-list {
   list-style: none;
   margin: 0;
   padding: 0;
-
   position: relative;
-}
-
-.panel {
-  position: absolute;
 }
