@@ -31,8 +31,7 @@ const App: React.FC = () => (
       <IonReactRouter>
         <Switch>
           <Route path="/" component={Home} exact={true} />
-          <Route path="/pokedex" component={Pokedex} />
-          <Route path="/pokemons/:id" component={Pokemon} />
+          <Route path={["/pokedex/:id", "/pokedex"]} component={Pokedex} />
         </Switch>
       </IonReactRouter>
     </IonApp>

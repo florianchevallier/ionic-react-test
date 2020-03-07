@@ -9,6 +9,8 @@ import { useQuery, queryCache } from 'react-query';
 import { useInfiniteScroll } from 'react-infinite-scroll-hook';
 import { PokemonListItem, PokemonResults } from '../../types';
 import Layout from '../../components/Layout/Layout';
+import cx from 'classnames';
+import { motion } from 'framer-motion';
 
 
 function parsePokemons(pokemonsFetched: PokemonNamespace.Pokemon[]) {
@@ -26,7 +28,7 @@ function parsePokemons(pokemonsFetched: PokemonNamespace.Pokemon[]) {
 
 const LIMIT = 20;
 
-const PokedexPage: React.FC = () => {
+const PokedexPage: React.FC = ({ match }: any) => {
   const fetchPokemons = (offset: number) => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon?limit=${LIMIT}&offset=${offset}`)
   const fetchPokemon = (name: string) => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon/${name}`, { cache: "force-cache" });
 
@@ -34,6 +36,9 @@ const PokedexPage: React.FC = () => {
   const [offset, setOffset] = useState<number>(0);
   const [pokemons, setPokemons] = useState<PokemonListItem[]>([]);
   const [animationId, setAnimationId] = useState<number>(0);
+  const params: { id?: string | undefined; } = match.params;
+  console.log('params', params);
+  const { id } = params;
 
   const infiniteRef: any = useInfiniteScroll({
     loading: isLoading,
@@ -82,25 +87,32 @@ const PokedexPage: React.FC = () => {
       <IonHeader translucent className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/" />
+            <IonBackButton defaultHref={id ? '/pokedex' : '/'} />
           </IonButtons>
           <IonButtons slot="end">
             <MdList size={40} />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <h1>Pokédex</h1>
-        {isLoading && (
-          <p>Fetching pokemons</p>
-        )}
-        <div className="pokemon-list" ref={infiniteRef}>
-          {pokemons.length ? pokemons.map((p, i) => (
-            <PokemonCard id={i > 20 ? animationId : i} key={p.number} {...p} />)
-          ) : null}
-        </div>
-
-      </IonContent>
+      <div className="pokedex">
+        <IonContent className={cx({ 'is-open': !!id})}>
+          <motion.h1 animate={{ display: !!id ? 'none': 'block' }}>Pokédex</motion.h1>
+          {isLoading && (
+            <p>Fetching pokemons</p>
+          )}
+          <div className="pokemon-list" ref={id ? null : infiniteRef}>
+            {pokemons.length ? pokemons.map((p, i) => (
+              <PokemonCard
+                hasParamId={!!id}
+                id={i > 20 ? animationId : i}
+                key={p.number}
+                isSelected={id ? parseInt(id) === p.number : false}
+                {...p}
+              />)
+            ) : null}
+          </div>
+        </IonContent>
+      </div>
     </Layout>
   )
 }

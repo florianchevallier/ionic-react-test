@@ -1,17 +1,16 @@
-ion-content {
-  --background: translucent;
-  --padding-start: 10px;
-  --padding-end: 10px;
-}
-
-ion-item {
-  --border-color: none;
-  --border-style: none;
-  width: 100%;
-}
 
 .home {
-
+  ion-content {
+    --background: translucent;
+    --padding-start: 10px;
+    --padding-end: 10px;
+  }
+  
+  ion-item {
+    --border-color: none;
+    --border-style: none;
+    width: 100%;
+  }
   .title {
     margin-top: 30%;
     font-size: 1.9em;
