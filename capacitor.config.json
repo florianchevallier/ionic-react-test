@@ -1,8 +1,14 @@
 {
   "appId": "com.rmm.test.app",
-  "appName": "ua-test",
+  "appName": "Poc-edex",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
-  "cordova": {}
+  "cordova": {},
+  "plugins": {
+    "SplashScreen": {
+      "showSpinner": true,
+      "androidSplashResourceName": "screen"
+    }
+  }
 }

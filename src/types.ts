@@ -85,3 +85,35 @@ export interface Variety {
   is_default: boolean;
   pokemon:    Color;
 }
+
+
+export interface Pokedex {
+  id: number;
+  name: string;
+  is_main_series: boolean;
+  descriptions: Description[];
+  names: PokedexName[];
+  pokemon_entries: Pokemonentry[];
+  region?: any;
+  version_groups: any[];
+}
+
+interface Pokemonentry {
+  entry_number: number;
+  pokemon_species: Language;
+}
+
+interface PokedexName {
+  name: string;
+  language: Language;
+}
+
+interface Description {
+  description: string;
+  language: Language;
+}
+
+interface Language {
+  name: string;
+  url: string;
+}

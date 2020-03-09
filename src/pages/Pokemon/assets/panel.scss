@@ -15,7 +15,7 @@
     .title {
       display: block;
       margin-bottom: 5px;
-      color: #9C9C9C;
+      color: #9c9c9c;
     }
     .bloc {
       font-size: 12px;
@@ -31,11 +31,28 @@
     }
     .title {
       font-size: 14px;
-      color: #9C9C9C;
+      color: #9c9c9c;
     }
     .measure {
       font-size: 14px;
       padding-left: 20px;
+    }
+  }
+}
+
+.base-stats {
+  tr {
+    padding: 20px 0px;
+    height: 30px;
+    .stat-title {
+      color: #A7A7A7;
+      width: 30px;
+      white-space: nowrap;
+    }
+    .stat-value {
+      padding-left: 20px;
+      padding-right: 20px;
+      width: 30px;
     }
   }
 }

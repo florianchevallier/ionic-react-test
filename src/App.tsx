@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonApp } from '@ionic/react';
+import { Plugins } from '@capacitor/core';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home/Home';
 import { ReactQueryConfigProvider } from 'react-query';
@@ -25,18 +26,26 @@ import './theme/variables.scss';
 import Pokedex from './pages/Pokedex';
 import Pokemon from './pages/Pokemon';
 
-const App: React.FC = () => (
-  <ReactQueryConfigProvider config={{ refetchAllOnWindowFocus: false }}>
-    <IonApp>
-      <IonReactRouter>
-        <Switch>
-          <Route path="/" component={Home} exact={true} />
-          <Route path="/pokedex" component={Pokedex} />
-          <Route path="/pokemons/:id" component={Pokemon} />
-        </Switch>
-      </IonReactRouter>
-    </IonApp>
-  </ReactQueryConfigProvider>
-);
+const { SplashScreen } = Plugins;
+
+
+const App: React.FC = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
+  return (
+    <ReactQueryConfigProvider config={{ refetchAllOnWindowFocus: false }}>
+      <IonApp>
+        <IonReactRouter>
+          <Switch>
+            <Route path="/" component={Home} exact={true} />
+            <Route path="/pokedex" component={Pokedex} />
+            <Route path="/pokemons/:id" component={Pokemon} />
+          </Switch>
+        </IonReactRouter>
+      </IonApp>
+    </ReactQueryConfigProvider>
+  )
+};
 
 export default App;

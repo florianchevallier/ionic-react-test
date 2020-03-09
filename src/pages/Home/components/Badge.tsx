@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { IonItem } from '@ionic/react';
+import { useHistory } from 'react-router';
 
 interface Props {
   name: string,
@@ -10,14 +10,13 @@ interface Props {
 
 function Badge(props: Props) {
   const { name, color, to } = props
+  const history = useHistory();
 
   return (
-    <IonItem routerLink={to}>
-      <div className={cx("badge", color)} >
-        <img src="/assets/images/pokeball_white.png" alt="pokeball"/>
-        <span>{name}</span>
-      </div>
-    </IonItem>
+    <div className={cx("badge", color)} onClick={() => history.push(to)} >
+      <img src="/assets/images/pokeball_white.png" alt="pokeball" />
+      <span>{name}</span>
+    </div>
   )
 }
 

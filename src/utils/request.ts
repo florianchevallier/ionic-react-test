@@ -45,11 +45,7 @@ function checkStatus(response: { status: number; statusText: string | undefined;
  * @return {object}             The response data
  */
 export default function request(url: string, callOptions: any = null) {
-  const prefix =
-    process.env.NODE_ENV === 'development' && url.startsWith('/')
-      ? process.env.API_URL
-      : '';
-  let pUrl = prefix + url;
+  let pUrl =  url;
   const options = Object.assign(
     {
       headers: {},

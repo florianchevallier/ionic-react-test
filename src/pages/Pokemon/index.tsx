@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { IonBackButton, IonButtons, IonHeader, IonLoading, IonToolbar } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonBackButton, IonButtons, IonHeader, IonToolbar } from '@ionic/react';
 
 import cx from 'classnames';
 import { IoMdHeartEmpty } from 'react-icons/io';
@@ -27,7 +27,6 @@ interface GetPokemonResponse {
 
 function Pokemon() {
   const params: PokemonParams = useParams<PokemonParams>();
-  const [isLoading, setIsLoading] = useState(true);
   const [pokemonOpacity, setPokemonOpacity] = useState<MotionValue>()
   const [isCardOpen, setIsCardOpen] = useState<boolean>(false);
   const fromTop = 250;
@@ -38,68 +37,66 @@ function Pokemon() {
   const { data: specie, isFetching: isFetchingSpecie }: GetPokemonSpecieResponse = useQuery('pokemon', () => fetchPokemonSpecie());
   const { data: pokemon, isFetching: isFetchingPokemon }: GetPokemonResponse = useQuery('pokemon-specie', () => fetchPokemon());
 
-  useEffect(() => {
-    if (!isFetchingPokemon && !isFetchingSpecie) {
-      setIsLoading(false);
-    }
-  }, [isFetchingSpecie, isFetchingPokemon])
-
   const type1 = pokemon?.types.find(t => t.slot === 1)?.type.name;
   const type2 = pokemon?.types.find(t => t.slot === 2)?.type.name;
 
+  const isLoading = isFetchingPokemon || isFetchingSpecie;
+
   return (
-    <div className={cx("pokemon-layout", type1)}>
-      <div className="pokemon-top-layout">
-        <img
-          className="background-img"
-          src="/assets/images/pokeball_white.png"
-          alt="pokeball white"
-          style={{
-            top: fromTop
-          }}
-        />
-        {!isLoading && pokemon ? (
+    <>
+      <div className={cx("pokemon-layout", type1)}>
+        <div className="pokemon-top-layout">
           <motion.img
-            style={{ opacity: pokemonOpacity, zIndex: isCardOpen ? 0 : 2, top: fromTop }}
-            className="background-img-pokemon"
-            src={`https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`}
-            alt={pokemon.name}
+            className="background-img"
+            src="/assets/images/pokeball_white.png"
+            alt="pokeball white"
+            style={{
+              top: fromTop,
+              left: '50%'
+            }}
+            initial={{ rotate: '0deg', translateX: '-50%', translateY: '-50%' }}
+            animate={{ rotate: '360deg' }}
+            transition={{ duration: 2, loop: Infinity }}
           />
-        ) : null}
-        <IonLoading
-          isOpen={isLoading}
-          message={'Please wait...'}
-        />
-        <IonHeader className="ion-no-border">
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonBackButton defaultHref="/pokedex" />
-            </IonButtons>
-            <IonButtons slot="primary">
-              <IoMdHeartEmpty size={20} />
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+          {!isLoading && pokemon ? (
+            <motion.img
+              style={{ opacity: pokemonOpacity, zIndex: isCardOpen ? 0 : 2, top: fromTop }}
+              className="background-img-pokemon"
+              src={`https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`}
+              alt={pokemon.name}
+            />
+          ) : null}
+          <IonHeader className="ion-no-border">
+            <IonToolbar>
+              <IonButtons slot="start">
+                <IonBackButton defaultHref="/pokedex" />
+              </IonButtons>
+              <IonButtons slot="primary">
+                <IoMdHeartEmpty size={20} />
+              </IonButtons>
+            </IonToolbar>
+          </IonHeader>
+          {!isLoading && pokemon && specie ? (
+            <Header
+              name={pokemon.name}
+              number={pokemon.id}
+              type1={type1}
+              type2={type2}
+              shortDescription={specie.genera.find(g => g.language.name === 'en')?.genus}
+            />
+          ) : null}
+        </div>
         {!isLoading && pokemon && specie ? (
-          <Header
-            name={pokemon.name}
-            number={pokemon.id}
-            type1={type1}
-            type2={type2}
-            shortDescription={specie.genera.find(g => g.language.name === 'en')?.genus}
+          <Card
+            setPokemonOpacity={setPokemonOpacity}
+            isCardOpen={isCardOpen}
+            setIsCardOpen={setIsCardOpen}
+            pokemon={pokemon}
+            specie={specie}
           />
         ) : null}
       </div>
-      {!isLoading && pokemon && specie ? (
-        <Card
-          setPokemonOpacity={setPokemonOpacity}
-          isCardOpen={isCardOpen}
-          setIsCardOpen={setIsCardOpen}
-          pokemon={pokemon}
-          specie={specie}
-        />
-      ) : null}
-    </div>
+    </>
   )
 }
 
