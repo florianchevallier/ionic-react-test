@@ -16,14 +16,12 @@ function Card({
   const upTo = 230;
   const controls = useAnimation();
   const y = useMotionValue(0)
-  const yRange = [0, -70]
+  const yRange = [0, -230]
   const opacityRange = [1, 0]
   const opacity = useTransform(y, yRange, opacityRange);
-  console.log('upTo', upTo);
 
   useEffect(() => {
     setPokemonOpacity(opacity)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opacity])
 
   function onCardClick() {
@@ -31,32 +29,18 @@ function Card({
     setIsCardOpen(!isCardOpen);
   }
 
-  function onDragEnd(event: any, info: PanInfo): void {
-    if (info.point.y < 0) {
-      setIsCardOpen(true)
-    } else {
-      setIsCardOpen(false)
-    }
-  }
-
+  console.log('y', y.get());
   return (
     <motion.div
       className="card"
-      drag="y"
-      dragConstraints={{ left: 0, right: 0, top: -upTo, bottom: 0 }}
       initial={{
         position: 'relative',
         top: 150
       }}
-      dragElastic={0.1}
+      transition={{ type: "tween", duration: .3 }}
       style={{ y }}
       onClick={onCardClick}
       animate={controls}
-      onDragEnd={onDragEnd}
-      dragTransition={{
-        min: 50,
-        bounceStiffness: 800
-      }}
     >
       <Tabs pokemon={pokemon} specie={specie} />
     </motion.div>

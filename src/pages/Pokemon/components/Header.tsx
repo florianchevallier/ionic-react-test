@@ -1,20 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import capitalize from 'lodash/capitalize'
 import cx from 'classnames'
+import { motion } from 'framer-motion';
 
 interface Props {
   name: string,
   number: number,
-  type1: string | undefined,
-  type2: string | undefined,
-  shortDescription: string | undefined
+  type1?: string,
+  type2?: string,
+  shortDescription?: string,
+  isCardOpen: boolean
 }
 
 function getAbsoluteNumber(number: number)
-: string
-{
-  if (number < 10) return '#00'+number;
-  if (number < 100) return '#0'+number;
+  : string {
+  if (number < 10) return '#00' + number;
+  if (number < 100) return '#0' + number;
   return `#${number}`
 }
 
@@ -24,12 +25,24 @@ function Header({
   type1,
   type2,
   shortDescription,
+  isCardOpen
 }: Props) {
 
   return (
     <>
-      <div className="header">
-        <h3>{capitalize(name)}</h3>
+      <div
+        className="header"
+      >
+        <motion.h3
+          id="title"
+          initial={false}
+          animate={{
+            x: isCardOpen ? '100%' : 0,
+            y: isCardOpen ? -60 : 0,
+          }}
+          transition={{ type: "tween", duration: .3 }}
+        >{capitalize(name)}
+        </motion.h3>
         <span className="number">{getAbsoluteNumber(number)}</span>
       </div>
       <div className="subheader">
@@ -37,7 +50,7 @@ function Header({
           <div className={cx("type", type1)}>{capitalize(type1)}</div>
           {type2 ? (
             <div className={cx("type", type1)}>{capitalize(type2)}</div>
-          ): null}
+          ) : null}
         </div>
         <span className="short-description">{shortDescription}</span>
       </div>

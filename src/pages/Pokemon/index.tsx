@@ -55,8 +55,12 @@ function Pokemon() {
               left: '50%'
             }}
             initial={{ rotate: '0deg', translateX: '-50%', translateY: '-50%' }}
-            animate={{ rotate: '360deg' }}
-            transition={{ duration: 2, loop: Infinity }}
+            animate={{
+                rotate: '360deg',
+                x: isCardOpen ? '112%' : 0,
+                y: isCardOpen ? -195 : 0
+           }}
+            transition={{ type: 'tween', duration: .3 }}
           />
           {!isLoading && pokemon ? (
             <motion.img
@@ -83,6 +87,7 @@ function Pokemon() {
               type1={type1}
               type2={type2}
               shortDescription={specie.genera.find(g => g.language.name === 'en')?.genus}
+              isCardOpen={isCardOpen}
             />
           ) : null}
         </div>
