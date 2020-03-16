@@ -8,6 +8,7 @@ import PokemonCard from './components/PokemonCard';
 import { useQuery, queryCache } from 'react-query';
 import { useInfiniteScroll } from 'react-infinite-scroll-hook';
 import { PokemonListItem, PokemonResults } from '../../types';
+import Layout from '../../components/Layout/Layout';
 
 
 function parsePokemons(pokemonsFetched: PokemonNamespace.Pokemon[]) {
@@ -28,10 +29,11 @@ const LIMIT = 20;
 const PokedexPage: React.FC = () => {
   const fetchPokemons = (offset: number) => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon?limit=${LIMIT}&offset=${offset}`)
   const fetchPokemon = (name: string) => request(`https://pokeapi.aircoty.ovh/api/v2/pokemon/${name}`, { cache: "force-cache" });
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const [offset, setOffset] = useState<number>(0);
   const [pokemons, setPokemons] = useState<PokemonListItem[]>([]);
+  const [animationId, setAnimationId] = useState<number>(0);
 
   const infiniteRef: any = useInfiniteScroll({
     loading: isLoading,
@@ -56,7 +58,7 @@ const PokedexPage: React.FC = () => {
   }
 
   useEffect(() => {
-    
+
     if (status === 'success') {
       fetchAllPokemons(data).then((pokemonParsed: PokemonListItem[]) => {
         setPokemons(pokemonParsed);
@@ -67,15 +69,16 @@ const PokedexPage: React.FC = () => {
   function handleLoadMore() {
     setIsLoading(true);
     setOffset(offset + 20);
-    fetchPokemons(offset+20).then((pokemonsFetched: any) => {
+    fetchPokemons(offset + 20).then((pokemonsFetched: any) => {
       fetchAllPokemons(pokemonsFetched).then((newPokemons: PokemonListItem[]) => {
+        setAnimationId(0);
         setPokemons([...pokemons, ...newPokemons]);
       })
     })
   }
 
   return (
-    <>
+    <Layout>
       <IonHeader translucent className="ion-no-border">
         <IonToolbar>
           <IonButtons slot="start">
@@ -92,11 +95,13 @@ const PokedexPage: React.FC = () => {
           <p>Fetching pokemons</p>
         )}
         <div className="pokemon-list" ref={infiniteRef}>
-          {pokemons.length ? pokemons.map(p => (<PokemonCard key={p.number} {...p} />)) : null}
+          {pokemons.length ? pokemons.map((p, i) => (
+            <PokemonCard id={i > 20 ? animationId : i} key={p.number} {...p} />)
+          ) : null}
         </div>
 
       </IonContent>
-    </>
+    </Layout>
   )
 }
 

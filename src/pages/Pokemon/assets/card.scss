@@ -1,0 +1,49 @@
+.card {
+  background-color: white;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding: 40px 10px;
+  height: 850px;
+  z-index: 1;
+  width: 100%;
+}
+
+.tabs {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #fff;
+  margin: 0px 0;
+  padding: 0 10px;
+}
+
+.tab-list {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.tab {
+  outline: none;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  opacity: 0.5;
+  padding-bottom: 15px;
+  background-color: #fff;
+  transition: opacity 0.16s ease-in-out;
+
+  &.active {
+    border-bottom: 1px black solid;
+    opacity: 1;
+  }
+}
+
+.panel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}

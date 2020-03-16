@@ -1,26 +1,8 @@
+@import '../../../theme/variables';
+
 ion-toolbar {
   --background: transparent;
 }
-
-$types:
-  "normal" ".normal" #A8A77A,
-  "fire" ".fire" #FD6A63,
-  "water" ".water" #37A1F2,
-  "electric" ".electric" #F7D02C,
-  "grass" ".grass" #37B99E,
-  "ice" ".ice" #96D9D6,
-  "fighting" ".fighting" #C22E28,
-  "poison" ".poison" #A33EA1,
-  "ground" ".ground" #E2BF65,
-  "flying" ".flying" #A98FF3,
-  "psychic" ".psychic" #F95587,
-  "bug" ".bug" #A6B91A,
-  "rock" ".rock" #B6A136,
-  "ghost" ".ghost" #735797,
-  "dragon" ".dragon" #6F35FC,
-  "dark" ".dark" #705746,
-  "steel" ".steel" #B7B7CE,
-  "fairy" ".fairy" #D685AD;
 
 .pokemon-list {
   display: flex;
@@ -62,23 +44,26 @@ $types:
     opacity: .4;
   }
 
-  .sprite {
-    position: absolute;
-    bottom: 0;
-    right: -10px;
-  }
-
   .background-pokeball {
     position: absolute;
     bottom: 0;
     right: -10px;
     width: 70px;
     opacity: .2;
+    z-index: 0;
   }
 
   .name {
     color: white;
     margin-top: 20px;
+  }
+
+  .sprite {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    max-height: 50px;
+    z-index: 1;
   }
 
   @each $name, $selector, $color in $types {
